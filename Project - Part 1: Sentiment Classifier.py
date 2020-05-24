@@ -14,17 +14,28 @@ def strip_punctuation(strWord):
 
 #Next, copy in your strip_punctuation function and define a function called get_pos which takes one parameter, a string which represents one or more sentences, and calculates how many words in the string are considered positive words. Use the list, positive_words to determine what words will count as positive. The function should return a positive integer - how many occurrences there are of positive words in the text. Note that all of the words in positive_words are lower cased, so you’ll need to convert all the words in the input string to lower case as well.
 
-def get_neg(strSentences):
-    strSentences = strip_punctuation(strSentences)
-    listStrSentences = strSentences.split()
+punctuation_chars = ["'", '"', ",", ".", "!", ":", ";", '#', '@']
+# list of positive words to use
+positive_words = []
+with open("positive_words.txt") as pos_f:
+    for lin in pos_f:
+        if lin[0] != ';' and lin[0] != '\n':
+            positive_words.append(lin.strip())
 
-   count=0
-   for word in listStrSentences:
-       for negativeWord in negative_words:
-           if word == negativeWord:
-              count+=1
-             print(count)
-       return count
+def get_pos(strSentences):
+    strSentences = strip_punctuation(strSentences)
+    listStrSentences= strSentences.split()
+
+    count=0
+    for word in listStrSentences:
+         for positiveWord in positive_words:
+                if word == positiveWord:
+                    count+=1
+    return count
+def strip_punctuation(strWord):
+    for charPunct in punctuation_chars:
+        strWord =strWord.replace(charPunct, "")
+    return strWord
        
  #Next, copy in your strip_punctuation function and define a function called get_neg which takes one parameter, a string which represents one or more sentences, and calculates how many words in the string are considered negative words. Use the list, negative_words to determine what words will count as negative. The function should return a positive integer - how many occurrences there are of negative words in the text. Note that all of the words in negative_words are lower cased, so you’ll need to convert all the words in the input string to lower case as well.
  
